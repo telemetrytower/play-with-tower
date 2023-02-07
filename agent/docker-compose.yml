@@ -1,0 +1,33 @@
+version: '3.4'
+services:
+  prometheus:
+    image: prom/prometheus:v2.39.1
+    command: ["--config.file=/etc/prometheus/prometheus.yaml", "--enable-feature=expand-external-labels", "--enable-feature=agent", "--log.level=debug"]
+    environment:
+      PODNAME: prometheus/agent
+    volumes:
+      - ./config/agent:/etc/prometheus
+      - data-prometheus:/prometheus
+      
+  agent:
+    image: grafana/agent:v0.24.1
+    volumes:
+      - ./config/agent:/etc/agent-config
+    entrypoint:
+      - /bin/agent
+      - -config.file=/etc/agent-config/grafana.yaml
+      - -metrics.wal-directory=/tmp/agent/wal
+      - -enable-features=integrations-next
+      - -config.expand-env
+      - -config.enable-read-api
+    environment:
+      PODNAME: grafana/agent
+
+  collector:
+    image: otel/opentelemetry-collector:0.69.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./config/agent/collector.yaml:/etc/otel-collector-config.yaml
+
+volumes:
+  data-prometheus:

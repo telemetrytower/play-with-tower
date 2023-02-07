@@ -1,0 +1,22 @@
+server:
+  log_level: debug
+
+metrics:
+  global:
+    scrape_interval: 15s
+    external_labels:
+      cluster: demo
+      namespace: demo
+      __replica__: ${PODNAME} 
+    remote_write:
+    - url: https://io.telemetrytower.com/api/v1/push
+      authorization:
+        credentials: xxx
+      send_exemplars: true
+      
+  configs:
+  - name: prometheus
+    scrape_configs:
+    - job_name: prometheus
+      static_configs:
+      - targets: ['prometheus:9090']

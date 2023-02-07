@@ -1,0 +1,28 @@
+receivers:      
+  prometheus:
+    config:
+      scrape_configs:
+      - job_name: 'prometheus'
+        scrape_interval: 15s
+        static_configs:
+        - targets: ['prometheus:9090']
+        
+exporters:
+  prometheusremotewrite:
+    endpoint: https://io.telemetrytower.com/api/v1/push
+    external_labels:
+      cluster: demo
+      namespace: demo
+      __replica__: collector 
+    headers:
+      Authorization: xxx
+
+processors:
+  batch:
+
+service:
+  pipelines:
+    metrics:
+      receivers: [prometheus]
+      processors: [batch]
+      exporters: [prometheusremotewrite]
