@@ -17,7 +17,9 @@ esp8266的默认串口，使用RX0,TX0。同时发现，当再开启软串口 So
 因为作者没有可用的usb转ttl工具，可以[参考](https://www.electronics-lab.com/three-ways-make-arduino-works-usbttl-converter/)，借助arduino快速制作一个usb转ttl的工具。
 image.png
 ## 安装 modbusslave 测试软件
-下载破解的测试软件，作为modbus的模拟设备。设置为03模式，工作模式，如下图所示:
+下载破解的测试软件，作为modbus的模拟设备。设置为03模式，工作模式，如下图所示:  
+![modbusslave_test_software](https://user-images.githubusercontent.com/41465048/219366575-ecea0457-139a-4e44-8b72-b779a4ad02df.png)
+
 # 读取modbus数据
 ## 读modbus slave设备数据
 esp8266作为modbus的master设备，启动后，
@@ -42,6 +44,10 @@ else {
     Serial.println(respo2); 
 }
 ```
+esp8266作为modbus的master设备，电脑模拟软件作为modbus的slave设备，  
+![esp8266_readdata_from_modbus](https://user-images.githubusercontent.com/41465048/219366928-e8554009-bd17-46fc-adf2-599a2d984451.png)
+
+
 ## 将数据发送到遥测塔
 ### 方式1、使用http/https client发送数据
 配置文件config.h配置token等信息，
@@ -67,7 +73,7 @@ void sendserver(String data) {
     hc.addHeader("Auth",GC_PASS));
 ```
 ### 方式2、使用mqtt发送数据
-[参考]mqtt章节配置ino文件(https://github.com/telemetrytower/play-with-tower/tree/master/iot-demo/esp8266-temperature-demo)
+[参考](https://github.com/telemetrytower/play-with-tower/tree/master/iot-demo/esp8266-temperature-demo)mqtt章节配置ino文件
 ### 方式3、使用 grafana 提供的 prometheus 工具
 [grafana 源码在这里](https://github.com/grafana/prometheus-arduino/)。
 注意，此工具适合esp32等高内存开发板，在esp8266上运行会崩溃，并报如下错误：
@@ -77,3 +83,4 @@ void sendserver(String data) {
 14:41:34.676 -> epc1=0x4000df1b epc2=0x00000000 epc3=0x00000000 excvaddr=0x4023ec1d depc=0x00000000
 ```
 ## 效果图
+![image](https://user-images.githubusercontent.com/41465048/219366411-d7ef685d-12e4-438c-8373-04b65152177a.png)
