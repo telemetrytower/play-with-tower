@@ -1,15 +1,15 @@
 ## go-mysql-server-proxy
-此项目启发自https://github.com/dolthub/go-mysql-server。  
-本项目旨在提供一个适配sql协议的接入层协议，方便原有的基于sql语义的写入端，做较少的改动，将sql数据写入其他存储系统。  
-本项目暂不提供sql的持久化存储功能。目前的底层存储，基于Prometheus生态构建，如果您需要其他存储，如sqllite等，可以参考本工程进行扩展即可。  
+此项目启发自https://github.com/dolthub/go-mysql-server。    
+本项目旨在提供一个适配sql协议的接入层协议，方便原有的基于sql语义的写入端，做较少的改动，将sql数据写入其他存储系统。    
+本项目暂不提供sql的持久化存储功能。目前的底层存储，基于Prometheus生态构建，如果您需要其他存储，如sqllite等，可以参考本工程进行扩展即可。    
 
 ## 编译方法
 对于linux，直接执行./build.sh
 对于windows,执行 go build main.go
 
 ## 使用方法
-【编译好的可执行程序，在release目录下，包含linux/windows版本。】  
-【启动位置不限，在可执行程序目录下，创建好您的数据库同名的目录即可。】
+【编译好的可执行程序，在release目录下，包含linux/windows版本。】    
+【启动位置不限，在可执行程序目录下，创建好您的数据库同名的目录即可。】  
 以运动数据为例，进行说明。假设我们手环的运动数据，有如下格式：
 ```
 stepinfo 
@@ -91,10 +91,10 @@ mysql --host=127.0.0.1 --port=3306 -u root sqldata/sport -e "CREATE TABLE stepin
 
 ## 数据查询
 
-目前数据导入底层存储后，可直接在如下平台查看数据，  
-地址：https://grafana.telemetrytower.com/d/yDRMq0EVk/testboard?orgId=3  
-账号：test  
-密码：test  
+目前数据导入底层存储后，可直接在如下平台查看数据，    
+地址：https://grafana.telemetrytower.com/d/yDRMq0EVk/testboard?orgId=3    
+账号：test    
+密码：test    
 
 
 
